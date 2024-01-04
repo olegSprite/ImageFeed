@@ -7,19 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D51311DC2B458506000BCCBE /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51311DB2B458506000BCCBE /* ImagesListCell.swift */; };
 		D572AB2E2B3FEDE900EB7B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572AB2D2B3FEDE900EB7B88 /* AppDelegate.swift */; };
 		D572AB302B3FEDE900EB7B88 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572AB2F2B3FEDE900EB7B88 /* SceneDelegate.swift */; };
-		D572AB322B3FEDE900EB7B88 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572AB312B3FEDE900EB7B88 /* ViewController.swift */; };
+		D572AB322B3FEDE900EB7B88 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572AB312B3FEDE900EB7B88 /* ImagesListViewController.swift */; };
 		D572AB352B3FEDE900EB7B88 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D572AB332B3FEDE900EB7B88 /* Main.storyboard */; };
 		D572AB372B3FEDEB00EB7B88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D572AB362B3FEDEB00EB7B88 /* Assets.xcassets */; };
 		D572AB3A2B3FEDEB00EB7B88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D572AB382B3FEDEB00EB7B88 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D51311DB2B458506000BCCBE /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		D572AB2A2B3FEDE900EB7B88 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D572AB2D2B3FEDE900EB7B88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D572AB2F2B3FEDE900EB7B88 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D572AB312B3FEDE900EB7B88 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D572AB312B3FEDE900EB7B88 /* ImagesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewController.swift; sourceTree = "<group>"; };
 		D572AB342B3FEDE900EB7B88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D572AB362B3FEDEB00EB7B88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D572AB392B3FEDEB00EB7B88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -37,6 +39,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D51311DD2B45852C000BCCBE /* ImagesList */ = {
+			isa = PBXGroup;
+			children = (
+				D51311DB2B458506000BCCBE /* ImagesListCell.swift */,
+				D572AB312B3FEDE900EB7B88 /* ImagesListViewController.swift */,
+			);
+			path = ImagesList;
+			sourceTree = "<group>";
+		};
 		D572AB212B3FEDE900EB7B88 = {
 			isa = PBXGroup;
 			children = (
@@ -56,9 +67,9 @@
 		D572AB2C2B3FEDE900EB7B88 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				D51311DD2B45852C000BCCBE /* ImagesList */,
 				D572AB2D2B3FEDE900EB7B88 /* AppDelegate.swift */,
 				D572AB2F2B3FEDE900EB7B88 /* SceneDelegate.swift */,
-				D572AB312B3FEDE900EB7B88 /* ViewController.swift */,
 				D572AB332B3FEDE900EB7B88 /* Main.storyboard */,
 				D572AB362B3FEDEB00EB7B88 /* Assets.xcassets */,
 				D572AB382B3FEDEB00EB7B88 /* LaunchScreen.storyboard */,
@@ -138,7 +149,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D572AB322B3FEDE900EB7B88 /* ViewController.swift in Sources */,
+				D572AB322B3FEDE900EB7B88 /* ImagesListViewController.swift in Sources */,
+				D51311DC2B458506000BCCBE /* ImagesListCell.swift in Sources */,
 				D572AB2E2B3FEDE900EB7B88 /* AppDelegate.swift in Sources */,
 				D572AB302B3FEDE900EB7B88 /* SceneDelegate.swift in Sources */,
 			);
