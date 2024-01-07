@@ -52,7 +52,7 @@
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="152" id="eB4-xZ-JrG"/>
                                                         <constraint firstAttribute="height" constant="18" id="iL2-ea-N2J"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -62,6 +62,7 @@
                                                 <constraint firstItem="NjM-ml-m8R" firstAttribute="top" secondItem="7Ab-ig-ZVX" secondAttribute="top" id="5zf-Gc-H2C"/>
                                                 <constraint firstItem="7Ab-ig-ZVX" firstAttribute="top" secondItem="tYN-pp-XGh" secondAttribute="top" constant="4" id="PcB-57-9ue"/>
                                                 <constraint firstItem="VYC-pm-CQP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7Ab-ig-ZVX" secondAttribute="leading" id="SHY-0a-fUe"/>
+                                                <constraint firstAttribute="trailing" secondItem="VYC-pm-CQP" secondAttribute="trailing" constant="217" id="Xgc-AA-X6T"/>
                                                 <constraint firstItem="VYC-pm-CQP" firstAttribute="bottom" secondItem="7Ab-ig-ZVX" secondAttribute="bottom" constant="-8" id="aXI-kb-xLo"/>
                                                 <constraint firstItem="7Ab-ig-ZVX" firstAttribute="leading" secondItem="tYN-pp-XGh" secondAttribute="leading" constant="16" id="az6-wR-7g7"/>
                                                 <constraint firstItem="VYC-pm-CQP" firstAttribute="leading" secondItem="tYN-pp-XGh" secondAttribute="leadingMargin" constant="4" id="df1-rm-F6B"/>
