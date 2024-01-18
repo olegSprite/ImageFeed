@@ -14,6 +14,7 @@
 		D572AB352B3FEDE900EB7B88 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D572AB332B3FEDE900EB7B88 /* Main.storyboard */; };
 		D572AB372B3FEDEB00EB7B88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D572AB362B3FEDEB00EB7B88 /* Assets.xcassets */; };
 		D572AB3A2B3FEDEB00EB7B88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D572AB382B3FEDEB00EB7B88 /* LaunchScreen.storyboard */; };
+		D57FD1792B596D6300C710F5 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57FD1782B596D6200C710F5 /* SingleImageViewController.swift */; };
 		D5967B7B2B591B9200A8CCA5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5967B7A2B591B9200A8CCA5 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		D572AB362B3FEDEB00EB7B88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D572AB392B3FEDEB00EB7B88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D572AB3B2B3FEDEB00EB7B88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D57FD1782B596D6200C710F5 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		D5967B7A2B591B9200A8CCA5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -46,6 +48,7 @@
 			children = (
 				D51311DB2B458506000BCCBE /* ImagesListCell.swift */,
 				D572AB312B3FEDE900EB7B88 /* ImagesListViewController.swift */,
+				D57FD1782B596D6200C710F5 /* SingleImageViewController.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -164,6 +167,7 @@
 				D51311DC2B458506000BCCBE /* ImagesListCell.swift in Sources */,
 				D5967B7B2B591B9200A8CCA5 /* ProfileViewController.swift in Sources */,
 				D572AB2E2B3FEDE900EB7B88 /* AppDelegate.swift in Sources */,
+				D57FD1792B596D6300C710F5 /* SingleImageViewController.swift in Sources */,
 				D572AB302B3FEDE900EB7B88 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
