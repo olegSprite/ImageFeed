@@ -17,9 +17,9 @@ final class SingleImageViewController: UIViewController {
             }
         }
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak private var imageView: UIImageView!
+    @IBOutlet weak private var scrollView: UIScrollView!
     
-    @IBOutlet weak var scrollView: UIScrollView!
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -52,13 +52,15 @@ final class SingleImageViewController: UIViewController {
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
     
+    //MARK: - Actions
+    
     @IBAction func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func didTapShareButton(_ sender: Any) {
         
-    let shareImage = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        let shareImage = UIActivityViewController(activityItems: [image as Any], applicationActivities: nil)
         present(shareImage, animated: true)
     
     }
@@ -66,6 +68,7 @@ final class SingleImageViewController: UIViewController {
 }
 
 extension SingleImageViewController: UIScrollViewDelegate {
+    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView
     }
