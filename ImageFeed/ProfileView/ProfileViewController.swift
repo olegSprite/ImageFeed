@@ -52,10 +52,8 @@ final class ProfileViewController: UIViewController {
         nameLable.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLable)
         
-        nameLable.heightAnchor.constraint(equalToConstant: 18).isActive = true
-        nameLable.widthAnchor.constraint(equalToConstant: 250).isActive = true
         nameLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
-        nameLable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 110).isActive = true
+        nameLable.topAnchor.constraint(equalTo: profilePhotoImageView.bottomAnchor, constant: 8).isActive = true
     }
     
     private func addNickName() {
@@ -66,10 +64,8 @@ final class ProfileViewController: UIViewController {
         nickNameLable.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nickNameLable)
         
-        nickNameLable.heightAnchor.constraint(equalToConstant: 18).isActive = true
-        nickNameLable.widthAnchor.constraint(equalToConstant: 250).isActive = true
         nickNameLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
-        nickNameLable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 136).isActive = true
+        nickNameLable.topAnchor.constraint(equalTo: nameLable.bottomAnchor, constant: 8).isActive = true
     }
     
     private func addStatus() {
@@ -80,23 +76,21 @@ final class ProfileViewController: UIViewController {
         statusLable.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(statusLable)
         
-        statusLable.heightAnchor.constraint(equalToConstant: 18).isActive = true
-        statusLable.widthAnchor.constraint(equalToConstant: 250).isActive = true
         statusLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
-        statusLable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 162).isActive = true
+        statusLable.topAnchor.constraint(equalTo: nickNameLable.bottomAnchor, constant: 8).isActive = true
     }
     
     private func addExitButton() {
         
-        exitButton.tintColor = .red
+        exitButton.tintColor = UIColor(named: "YP Red")
         
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitButton)
         
         exitButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         exitButton.widthAnchor.constraint(equalToConstant: 48).isActive = true
-        exitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
-        exitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55).isActive = true
+        exitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
+        exitButton.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor).isActive = true
     }
     
     @objc
