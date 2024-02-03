@@ -266,17 +266,50 @@
             </objects>
             <point key="canvasLocation" x="129" y="-735"/>
         </scene>
-        <!--View Controller-->
+        <!--Web View View Controller-->
         <scene sceneID="OTr-AX-DC4">
             <objects>
-                <viewController id="0uE-rr-ofz" sceneMemberID="viewController">
+                <viewController id="0uE-rr-ofz" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vvc-hm-2sL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3u-tj-3Pb">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eot-yS-zhy">
+                                <rect key="frame" x="9" y="9" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="lLE-IT-P2u"/>
+                                    <constraint firstAttribute="height" constant="48" id="uTi-iv-nm7"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="nav_back_button"/>
+                                <connections>
+                                    <action selector="didTapBackButton:" destination="0uE-rr-ofz" eventType="touchUpInside" id="0Wa-eS-4re"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="9Dz-Wf-EVl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="e3u-tj-3Pb" firstAttribute="leading" secondItem="9Dz-Wf-EVl" secondAttribute="leading" id="6Nm-Kk-oxr"/>
+                            <constraint firstItem="Eot-yS-zhy" firstAttribute="leading" secondItem="9Dz-Wf-EVl" secondAttribute="leading" constant="9" id="IWn-nd-MBV"/>
+                            <constraint firstItem="e3u-tj-3Pb" firstAttribute="top" secondItem="9Dz-Wf-EVl" secondAttribute="top" id="NA9-qy-8Ih"/>
+                            <constraint firstItem="9Dz-Wf-EVl" firstAttribute="trailing" secondItem="e3u-tj-3Pb" secondAttribute="trailing" id="T2u-f0-0Dq"/>
+                            <constraint firstItem="Eot-yS-zhy" firstAttribute="top" secondItem="9Dz-Wf-EVl" secondAttribute="top" constant="9" id="Uhj-cP-NO8"/>
+                            <constraint firstItem="9Dz-Wf-EVl" firstAttribute="bottom" secondItem="e3u-tj-3Pb" secondAttribute="bottom" id="so7-Jc-BQh"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0Od-Jc-GBO"/>
+                    <connections>
+                        <outlet property="webView" destination="e3u-tj-3Pb" id="3Yz-IR-gJg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vnU-BC-XcB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -307,6 +340,7 @@
         <image name="Backward" width="24" height="24"/>
         <image name="Logo_of_Unsplash" width="60" height="60"/>
         <image name="Sharing" width="50" height="50"/>
+        <image name="nav_back_button" width="24" height="24"/>
         <image name="tab_editorial_active" width="76" height="49"/>
         <image name="tab_profile_active" width="76" height="49"/>
         <namedColor name="YPBlack">
