@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 final class AuthViewController: UIViewController {
+    
     private let identificator = "AuthViewController"
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

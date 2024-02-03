@@ -19,6 +19,8 @@ final class ProfileViewController: UIViewController {
         action: #selector(Self.didTapButton)
     )
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +31,8 @@ final class ProfileViewController: UIViewController {
         addStatus()
         addExitButton()
     }
+    
+    // MARK: - Funcs
     
     private func addProfilePhotoImageView() {
         
