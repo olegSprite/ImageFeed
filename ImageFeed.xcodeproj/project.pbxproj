@@ -16,6 +16,9 @@
 		D572AB3A2B3FEDEB00EB7B88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D572AB382B3FEDEB00EB7B88 /* LaunchScreen.storyboard */; };
 		D57FD1792B596D6300C710F5 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57FD1782B596D6200C710F5 /* SingleImageViewController.swift */; };
 		D5967B7B2B591B9200A8CCA5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5967B7A2B591B9200A8CCA5 /* ProfileViewController.swift */; };
+		D5E3D4532B6E970E00E50A45 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D4522B6E970E00E50A45 /* AuthViewController.swift */; };
+		D5E3D4552B6E972900E50A45 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D4542B6E972900E50A45 /* WebViewViewController.swift */; };
+		D5E3D4572B6E980300E50A45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D4562B6E980300E50A45 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		D572AB3B2B3FEDEB00EB7B88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D57FD1782B596D6200C710F5 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		D5967B7A2B591B9200A8CCA5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D5E3D4522B6E970E00E50A45 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		D5E3D4542B6E972900E50A45 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		D5E3D4562B6E980300E50A45 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +77,8 @@
 		D572AB2C2B3FEDE900EB7B88 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				D5E3D4562B6E980300E50A45 /* Constants.swift */,
+				D5E3D4512B6E96C200E50A45 /* AuthNew */,
 				D57FD17B2B59B25100C710F5 /* SingleImage */,
 				D5967B792B59139E00A8CCA5 /* ProfileView */,
 				D51311DD2B45852C000BCCBE /* ImagesList */,
@@ -98,6 +106,15 @@
 				D5967B7A2B591B9200A8CCA5 /* ProfileViewController.swift */,
 			);
 			path = ProfileView;
+			sourceTree = "<group>";
+		};
+		D5E3D4512B6E96C200E50A45 /* AuthNew */ = {
+			isa = PBXGroup;
+			children = (
+				D5E3D4522B6E970E00E50A45 /* AuthViewController.swift */,
+				D5E3D4542B6E972900E50A45 /* WebViewViewController.swift */,
+			);
+			path = AuthNew;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,9 +191,12 @@
 				D572AB322B3FEDE900EB7B88 /* ImagesListViewController.swift in Sources */,
 				D51311DC2B458506000BCCBE /* ImagesListCell.swift in Sources */,
 				D5967B7B2B591B9200A8CCA5 /* ProfileViewController.swift in Sources */,
+				D5E3D4532B6E970E00E50A45 /* AuthViewController.swift in Sources */,
 				D572AB2E2B3FEDE900EB7B88 /* AppDelegate.swift in Sources */,
 				D57FD1792B596D6300C710F5 /* SingleImageViewController.swift in Sources */,
+				D5E3D4552B6E972900E50A45 /* WebViewViewController.swift in Sources */,
 				D572AB302B3FEDE900EB7B88 /* SceneDelegate.swift in Sources */,
+				D5E3D4572B6E980300E50A45 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
