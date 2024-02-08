@@ -10,7 +10,7 @@ import UIKit
 final class ProfileViewController: UIViewController {
     
     private let profilePhotoImageView = UIImageView()
-    private let nameLable = UILabel()
+    private var nameLable = UILabel()
     private let nickNameLable = UILabel()
     private let statusLable = UILabel()
     private let exitButton = UIButton.systemButton(
@@ -97,8 +97,7 @@ final class ProfileViewController: UIViewController {
         exitButton.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor).isActive = true
     }
     
-    @objc
-    private func didTapButton() {
+    @objc private func didTapButton() {
         
     }
 }

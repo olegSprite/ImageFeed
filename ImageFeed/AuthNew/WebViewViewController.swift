@@ -28,17 +28,7 @@ final class WebViewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
-        urlComponents.queryItems = [
-           URLQueryItem(name: "client_id", value: AccessKey),
-           URLQueryItem(name: "redirect_uri", value: RedirectURI),
-           URLQueryItem(name: "response_type", value: "code"),
-           URLQueryItem(name: "scope", value: AccessScope)
-         ]
-         let url = urlComponents.url!            
-        
-        let request = URLRequest(url: url)
-        webView.load(request)
+        loadWebWiew()
         
         webView.navigationDelegate = self
     }
@@ -77,6 +67,20 @@ final class WebViewViewController: UIViewController {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
+    
+    private func loadWebWiew() {
+        var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
+        urlComponents.queryItems = [
+           URLQueryItem(name: "client_id", value: accessKey),
+           URLQueryItem(name: "redirect_uri", value: redirectURI),
+           URLQueryItem(name: "response_type", value: "code"),
+           URLQueryItem(name: "scope", value: accessScope)
+         ]
+         let url = urlComponents.url!
+        
+        let request = URLRequest(url: url)
+        webView.load(request)
+    }
 
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
@@ -86,7 +90,7 @@ final class WebViewViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func didTapBackButton(_ sender: Any) {
-        
+        delegate?.webViewViewControllerDidCancel(self)
     }
 }
 
@@ -100,7 +104,7 @@ extension WebViewViewController: WKNavigationDelegate {
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
          if let code = code(from: navigationAction) {
-                //TODO: process code
+                delegate?.webViewViewController(self, didAuthenticateWithCode: code)
                 decisionHandler(.cancel)
           } else {
                 decisionHandler(.allow)
