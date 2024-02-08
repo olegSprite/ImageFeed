@@ -40,7 +40,7 @@ final class SplashViewController: UIViewController {
             viewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
-           }
+        }
     }
     
     // MARK: - Func
