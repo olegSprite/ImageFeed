@@ -19,6 +19,8 @@ final class ProfileViewController: UIViewController {
         action: #selector(Self.didTapButton)
     )
     
+    private let profileService = ProfileService.shared
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -31,16 +33,8 @@ final class ProfileViewController: UIViewController {
         addStatus()
         addExitButton()
         
-        ProfileService().fetchProfile(OAuth2TokenStorage().token!) { result in
-            switch result {
-            case .success(let profile):
-                self.nameLable.text = profile.name
-                self.nickNameLable.text = profile.userName
-                self.statusLable.text = profile.bio
-            case .failure:
-                break
-            }
-        }
+        guard let profile = profileService.profile else { return }
+        updateProfileDetails(profile: profile)
     }
     
     // MARK: - Funcs
@@ -108,9 +102,7 @@ final class ProfileViewController: UIViewController {
         exitButton.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor).isActive = true
     }
     
-    private func updateInfo() {
-        
-        guard let profile = ProfileService().profile else { return }
+    private func updateProfileDetails(profile: Profile) {
         
         self.nameLable.text = profile.name
         self.nickNameLable.text = profile.userName

@@ -24,8 +24,7 @@ final class ProfileService {
     
     static let shared = ProfileService()
     private let urlSession = URLSession.shared
-    
-    var profile: Profile?
+    private (set) var profile: Profile?
     
     private func createURLRequest(with token: String) -> URLRequest? {
         
@@ -47,12 +46,12 @@ final class ProfileService {
         let task = object(for: request) { result in
             switch result {
             case .success(let body):
-                let profile = Profile(
+                self.profile = Profile(
                     userName: body.username ?? "Пусто",
                     name: "\(body.first_name ?? "Пусто") \(body.last_name ?? "Пусто")",
                     bio: body.bio ?? "Пусто"
                 )
-                completion(.success(profile))
+                completion(.success(self.profile!))
             case .failure(let error):
                 print(error)
                 completion(.failure(error))
