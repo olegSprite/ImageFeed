@@ -67,7 +67,7 @@ final class OAuth2Service {
                         print(error)
                         completion(.failure(error))
                     }
-                    self.task = nil                            // 14
+                    self.task = nil                 
                     self.lastCode = nil
                 } }
             self.task = task
@@ -76,7 +76,7 @@ final class OAuth2Service {
     
     private func authTokenRequest(code: String) -> URLRequest? {
         
-        guard let urlCode_ = URL(string: "...\(code)") else {
+        guard URL(string: "...\(code)") != nil else {
             assertionFailure("Failed to create URL")
             return nil
         }

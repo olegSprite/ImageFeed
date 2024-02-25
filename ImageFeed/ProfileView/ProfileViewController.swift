@@ -30,6 +30,16 @@ final class ProfileViewController: UIViewController {
         addNickName()
         addStatus()
         addExitButton()
+        
+        ProfileService().fetchProfile(OAuth2TokenStorage().token!) { result in // Токен в форсанрапе
+            
+            switch result {
+            case .success:
+                self.updateInfo()
+            case .failure:
+                break
+            }
+        }
     }
     
     // MARK: - Funcs
@@ -95,6 +105,15 @@ final class ProfileViewController: UIViewController {
         exitButton.widthAnchor.constraint(equalToConstant: 48).isActive = true
         exitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         exitButton.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor).isActive = true
+    }
+    
+    private func updateInfo() {
+        
+        guard let profile = ProfileService().profile else { return }
+        
+        self.nameLable.text = profile.name
+        self.nickNameLable.text = profile.userName
+        self.statusLable.text = profile.bio
     }
     
     @objc private func didTapButton() {
