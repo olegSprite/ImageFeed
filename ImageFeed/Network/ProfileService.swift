@@ -42,23 +42,22 @@ final class ProfileService {
         return request
     }
     
-    func fetchProfile(
-        _ token: String,
-        completion: @escaping (Result<Profile, Error>) -> Void) {
-        
+    func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         guard let request = createURLRequest(with: token) else { return }
-        
-            let task = object(for: request) { [weak self] result in
-            guard let self = self else { return }
-    
+        let task = object(for: request) { result in
             switch result {
             case .success(let body):
-                self.profile = Profile(userName: body.username ?? "Пусто", name: "\(body.first_name ?? "Пусто") \(body.last_name ?? "Пусто")", bio: body.bio ?? "Пусто")
-                completion(.success(self.profile!))
+                let profile = Profile(
+                    userName: body.username ?? "Пусто",
+                    name: "\(body.first_name ?? "Пусто") \(body.last_name ?? "Пусто")",
+                    bio: body.bio ?? "Пусто"
+                )
+                completion(.success(profile))
             case .failure(let error):
                 print(error)
                 completion(.failure(error))
-            } }
+            }
+        }
         task.resume()
     }
     

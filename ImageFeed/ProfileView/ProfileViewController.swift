@@ -31,11 +31,12 @@ final class ProfileViewController: UIViewController {
         addStatus()
         addExitButton()
         
-        ProfileService().fetchProfile(OAuth2TokenStorage().token!) { result in // Токен в форсанрапе
-            
+        ProfileService().fetchProfile(OAuth2TokenStorage().token!) { result in
             switch result {
-            case .success:
-                self.updateInfo()
+            case .success(let profile):
+                self.nameLable.text = profile.name
+                self.nickNameLable.text = profile.userName
+                self.statusLable.text = profile.bio
             case .failure:
                 break
             }
