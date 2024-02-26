@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D50CC15E2B8C68F100DA724A /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50CC15D2B8C68F100DA724A /* ProfileImageService.swift */; };
 		D51311DC2B458506000BCCBE /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51311DB2B458506000BCCBE /* ImagesListCell.swift */; };
 		D557F5382B71622A0079714F /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D557F5372B71622A0079714F /* OAuthTokenResponseBody.swift */; };
 		D557F53B2B7163600079714F /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D557F53A2B7163600079714F /* OAuth2Service.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D50CC15D2B8C68F100DA724A /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		D51311DB2B458506000BCCBE /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		D557F5372B71622A0079714F /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
 		D557F53A2B7163600079714F /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				D59BE3492B887C5900F13122 /* ProfileService.swift */,
 				D557F53A2B7163600079714F /* OAuth2Service.swift */,
 				D587ACC82B74CECC00051D53 /* Network Connection.swift */,
+				D50CC15D2B8C68F100DA724A /* ProfileImageService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				D572AB2E2B3FEDE900EB7B88 /* AppDelegate.swift in Sources */,
 				D57FD1792B596D6300C710F5 /* SingleImageViewController.swift in Sources */,
 				D5E3D4552B6E972900E50A45 /* WebViewViewController.swift in Sources */,
+				D50CC15E2B8C68F100DA724A /* ProfileImageService.swift in Sources */,
 				D572AB302B3FEDE900EB7B88 /* SceneDelegate.swift in Sources */,
 				D5E3D4572B6E980300E50A45 /* Constants.swift in Sources */,
 			);
