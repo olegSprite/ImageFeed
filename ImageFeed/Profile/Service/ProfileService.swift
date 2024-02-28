@@ -7,24 +7,12 @@
 
 import Foundation
 
-struct ProfileResult: Codable {
-    var username: String?
-    var first_name: String?
-    var last_name: String?
-    var bio: String?
-}
-
-struct Profile {
-    let userName: String
-    let name: String
-    let bio: String
-}
-
 final class ProfileService {
     
     static let shared = ProfileService()
     private let urlSession = URLSession.shared
     private (set) var profile: Profile?
+    private var task: URLSessionTask?
     
     private func createURLRequest(with token: String) -> URLRequest? {
         
@@ -43,34 +31,27 @@ final class ProfileService {
     
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         guard let request = createURLRequest(with: token) else { return }
-        let task = object(for: request) { result in
-            switch result {
+        
+        assert(Thread.isMainThread)
+        
+        if task != nil {
+            task?.cancel()
+        }
+        
+        task = URLSession.shared.objectTask(for: request) { [weak self] (response: Result<ProfileResult, Error>)  in
+            self?.task = nil
+            switch response {
             case .success(let body):
-                self.profile = Profile(
+                self?.profile = Profile(
                     userName: body.username ?? "Пусто",
                     name: "\(body.first_name ?? "Пусто") \(body.last_name ?? "Пусто")",
                     bio: body.bio ?? "Пусто"
                 )
-                completion(.success(self.profile!))
+                completion(.success((self?.profile)!))
             case .failure(let error):
                 print(error)
                 completion(.failure(error))
             }
-        }
-        task.resume()
-    }
-    
-    private func object(
-        for request: URLRequest,
-        completion: @escaping (Result<ProfileResult, Error>) -> Void
-    ) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<ProfileResult, Error> in
-                Result {try decoder.decode(ProfileResult.self, from: data)}
-            }
-            print(response)
-            completion(response)
         }
     }
 }

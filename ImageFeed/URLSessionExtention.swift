@@ -1,8 +1,8 @@
 //
-//  URLSession.swift
+//  URLSessionExtention.swift
 //  ImageFeed
 //
-//  Created by Олег Спиридонов on 08.02.2024.
+//  Created by Олег Спиридонов on 28.02.2024.
 //
 
 import Foundation
@@ -11,25 +11,34 @@ enum NetworkError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
+    case decodingErorr
 }
 
 extension URLSession {
-    func data(
+    func objectTask<T: Decodable>(
         for request: URLRequest,
-        completion: @escaping (Result<Data, Error>) -> Void
+        completion: @escaping (Result<T, Error>) -> Void
     ) -> URLSessionTask {
-        let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
+        let fulfillCompletion: (Result<T, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)
             }
         }
-        let task = dataTask(with: request, completionHandler: { data, response, error in
+        let session = URLSession.shared
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
             if let data = data,
                let response = response,
                let statusCode = (response as? HTTPURLResponse)?.statusCode
             {
                 if 200 ..< 300 ~= statusCode {
-                    fulfillCompletion(.success(data))
+                    do {
+                        let decoder = JSONDecoder()
+                        let result = try decoder.decode(T.self, from: data)
+                        fulfillCompletion(.success(result))
+                    }
+                    catch {
+                        fulfillCompletion(.failure(NetworkError.decodingErorr))
+                    }
                 } else {
                     fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
                 }
@@ -41,4 +50,5 @@ extension URLSession {
         })
         task.resume()
         return task
-    } }
+    }
+}
