@@ -55,8 +55,6 @@ final class SplashViewController: UIViewController {
             .instantiateViewController(withIdentifier: "TabBarViewController")
         window.rootViewController = tabBarController
     }
-    
-    
 }
 
 // MARK: - AuthViewControllerDelegate
@@ -103,7 +101,7 @@ extension SplashViewController: AuthViewControllerDelegate {
 
                 switch result {
                 case .success(let user):
-                    self.profileImageService.fetchProfileImageURL(username: user.userName, token: token) { _ in }
+                   self.profileImageService.fetchProfileImageURL(username: user.userName, token: token) { _ in }
                    self.switchToTabBarController()
 
                 case .failure:

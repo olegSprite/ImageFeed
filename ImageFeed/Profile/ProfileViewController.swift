@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
@@ -20,6 +21,7 @@ final class ProfileViewController: UIViewController {
     )
     
     private let profileService = ProfileService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     // - Черновик
     
@@ -60,9 +62,29 @@ final class ProfileViewController: UIViewController {
                 let profileImageURL = userInfo["URL"] as? String,   // 14
                 let url = URL(string: profileImageURL)              // 15
             else { return }
-            
+            let processor = RoundCornerImageProcessor(cornerRadius: 35, backgroundColor: .clear)
+            profilePhotoImageView.kf.indicatorType = .activity
+            profilePhotoImageView.kf.setImage(with: url,
+                                              placeholder: UIImage(systemName: "person.crop.circle.fill"),
+                                   options: [.processor(processor),
+                                             .cacheSerializer(FormatIndicatedCacheSerializer.png)]) {result in
+                                                 switch result {
+                                                 case.success(let value):
+                                                     print(value.image)
+                                                     print(value.cacheType)
+                                                     print(value.source)
+                                                 case .failure(let error):
+                                                     print(error)
+                                                 }
+                                             }
             // TODO [Sprint 11] Обновите аватар, используя Kingfisher
         }
+    
+    private func updateAvatar(url: URL) {
+        profilePhotoImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        profilePhotoImageView.kf.setImage(with: url, options: [.processor(processor)])
+    }
     
     
     // - Черновик
@@ -86,7 +108,15 @@ final class ProfileViewController: UIViewController {
                    let url = URL(string: avatarURL) {                   // 17
                     // TODO [Sprint 11]  Обновите аватар, если нотификация
                     // была опубликована до того, как мы подписались.
+            
                 }
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main) { [weak self] notification in
+                self?.updateAvatar(notification: notification)
+            }
         
         // - Черновик
     }
