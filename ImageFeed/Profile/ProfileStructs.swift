@@ -26,4 +26,6 @@ struct UserResult: Codable {
 
 struct ImageURL: Codable {
     var small: String?
+    var medium: String?
+    var large: String?
 }

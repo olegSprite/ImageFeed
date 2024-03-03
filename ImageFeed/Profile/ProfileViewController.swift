@@ -19,75 +19,24 @@ final class ProfileViewController: UIViewController {
         target: ProfileViewController.self,
         action: #selector(Self.didTapButton)
     )
-    
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
     
-    // - Черновик
-    
     override init(nibName: String?, bundle: Bundle?) {
-            super.init(nibName: nibName, bundle: bundle)
-            addObserver()
-        }
+        super.init(nibName: nibName, bundle: bundle)
+        addObserver()
+    }
     
     required init?(coder: NSCoder) {
-            super.init(coder: coder)
-            addObserver()
-        }
+        super.init(coder: coder)
+        addObserver()
+    }
     
     deinit {
-            removeObserver()
-        }
-    
-    private func addObserver() {
-            NotificationCenter.default.addObserver(                 // 1
-                self,                                               // 2
-                selector: #selector(updateAvatar(notification:)),   // 3
-                name: ProfileImageService.didChangeNotification,    // 4
-                object: nil)                                        // 5
-        }
-    
-    private func removeObserver() {
-            NotificationCenter.default.removeObserver(              // 6
-                self,                                               // 7
-                name: ProfileImageService.didChangeNotification,    // 8
-                object: nil)                                        // 9
-        }
-    
-    @objc                                                       // 10
-        private func updateAvatar(notification: Notification) {     // 11
-            guard
-                isViewLoaded,                                       // 12
-                let userInfo = notification.userInfo,               // 13
-                let profileImageURL = userInfo["URL"] as? String,   // 14
-                let url = URL(string: profileImageURL)              // 15
-            else { return }
-            let processor = RoundCornerImageProcessor(cornerRadius: 35, backgroundColor: .clear)
-            profilePhotoImageView.kf.indicatorType = .activity
-            profilePhotoImageView.kf.setImage(with: url,
-                                              placeholder: UIImage(systemName: "person.crop.circle.fill"),
-                                   options: [.processor(processor),
-                                             .cacheSerializer(FormatIndicatedCacheSerializer.png)]) {result in
-                                                 switch result {
-                                                 case.success(let value):
-                                                     print(value.image)
-                                                     print(value.cacheType)
-                                                     print(value.source)
-                                                 case .failure(let error):
-                                                     print(error)
-                                                 }
-                                             }
-            // TODO [Sprint 11] Обновите аватар, используя Kingfisher
-        }
-    
-    private func updateAvatar(url: URL) {
-        profilePhotoImageView.kf.indicatorType = .activity
-        let processor = RoundCornerImageProcessor(cornerRadius: 35)
-        profilePhotoImageView.kf.setImage(with: url, options: [.processor(processor)])
+        removeObserver()
     }
     
     
-    // - Черновик
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -103,13 +52,10 @@ final class ProfileViewController: UIViewController {
         guard let profile = profileService.profile else { return }
         updateProfileDetails(profile: profile)
         
-        // - Черновик
-        if let avatarURL = ProfileImageService.shared.avatarURL,// 16
-                   let url = URL(string: avatarURL) {                   // 17
-                    // TODO [Sprint 11]  Обновите аватар, если нотификация
-                    // была опубликована до того, как мы подписались.
-            
-                }
+        if let avatarURL = ProfileImageService.shared.avatarURL,
+           let url = URL(string: avatarURL) {
+            updateAvatar(url: url)
+        }
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
@@ -117,15 +63,63 @@ final class ProfileViewController: UIViewController {
             queue: .main) { [weak self] notification in
                 self?.updateAvatar(notification: notification)
             }
-        
-        // - Черновик
     }
     
     // MARK: - Funcs
     
+    private func addObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateAvatar(notification:)),
+            name: ProfileImageService.didChangeNotification,
+            object: nil)
+    }
+    
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: ProfileImageService.didChangeNotification,
+            object: nil)
+    }
+    
+    @objc
+    private func updateAvatar(notification: Notification) {
+        guard
+            isViewLoaded,
+            let userInfo = notification.userInfo,
+            let profileImageURL = userInfo["URL"] as? String,
+            let url = URL(string: profileImageURL)
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 35, backgroundColor: .clear)
+        profilePhotoImageView.kf.indicatorType = .activity
+        profilePhotoImageView.kf.setImage(with: url,
+                                          placeholder: UIImage(systemName: "person.crop.circle.fill"),
+                                          options: [.processor(processor),
+                                                    .cacheSerializer(FormatIndicatedCacheSerializer.png)]) {result in
+                                                        switch result {
+                                                        case.success(let value):
+                                                            print(value.image)
+                                                            print(value.cacheType)
+                                                            print(value.source)
+                                                        case .failure(let error):
+                                                            print(error)
+                                                        }
+                                                    }
+        
+    }
+    
+    private func updateAvatar(url: URL) {
+        profilePhotoImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        profilePhotoImageView.kf.setImage(with: url, options: [.processor(processor)])
+    }
+    
+    
     private func addProfilePhotoImageView() {
         
         profilePhotoImageView.image = UIImage(named: "PhotoProfile")
+        profilePhotoImageView.layer.cornerRadius = 35
+        profilePhotoImageView.clipsToBounds = true
         
         profilePhotoImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(profilePhotoImageView)

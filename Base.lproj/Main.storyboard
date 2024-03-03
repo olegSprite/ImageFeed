@@ -13,7 +13,7 @@
         <!--ImageList-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="ImageList" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImagesListViewController" title="ImageList" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -126,7 +126,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="uvs-WY-YAn">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarViewController" id="4jX-QG-QOE" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="4jX-QG-QOE" customClass="TabBarController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="kRx-lN-oSc"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Iby-iH-UrA">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -136,30 +136,10 @@
                             <color key="backgroundColor" name="YPBlack"/>
                         </tabBarAppearance>
                     </tabBar>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="A4I-rM-OEp"/>
-                        <segue destination="TCr-gj-ZXH" kind="relationship" relationship="viewControllers" id="1TA-4i-jTj"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W81-SM-Kkz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-863" y="289"/>
-        </scene>
-        <!--Profile View Controller-->
-        <scene sceneID="NaR-d4-eMU">
-            <objects>
-                <viewController id="TCr-gj-ZXH" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="esx-XQ-ytk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="0XU-aj-VnF"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_profile_active" id="ALA-f5-bbd"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="34r-u5-4NI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="131" y="625"/>
         </scene>
         <!--Single Image View Controller-->
         <scene sceneID="5lY-QX-Tau">
@@ -370,7 +350,6 @@
         <image name="Sharing" width="50" height="50"/>
         <image name="nav_back_button" width="24" height="24"/>
         <image name="tab_editorial_active" width="76" height="49"/>
-        <image name="tab_profile_active" width="76" height="49"/>
         <namedColor name="YPBlack">
             <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

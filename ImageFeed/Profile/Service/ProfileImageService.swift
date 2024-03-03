@@ -33,7 +33,7 @@ final class ProfileImageService {
             self?.task = nil
             switch response {
             case .success(let body):
-                self?.avatarURL = body.profile_image?.small
+                self?.avatarURL = body.profile_image?.medium
                 completion(.success(self?.avatarURL))
                 
                 NotificationCenter.default

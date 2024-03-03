@@ -25,7 +25,6 @@ final class SplashViewController: UIViewController {
         
         if let token = OAuth2TokenStorage().token {
             fetchProfile(token)
-            switchToTabBarController()
         } else {
             performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
         }
@@ -82,7 +81,7 @@ extension SplashViewController: AuthViewControllerDelegate {
         }
     }
     
-    func didAuthenticate(_ vc: AuthViewController) { //Куда то нужно воткнуть эту функцию, после авторизации
+    func didAuthenticate(_ vc: AuthViewController) {
             vc.dismiss(animated: true)
            
             guard let token = oauth2TokenStorage.token else {
