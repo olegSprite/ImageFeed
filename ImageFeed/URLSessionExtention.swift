@@ -37,14 +37,18 @@ extension URLSession {
                         fulfillCompletion(.success(result))
                     }
                     catch {
+                        print("Ошибка декодирования: \(error.localizedDescription), Данные: \(String(data: data, encoding: .utf8) ?? "")")
                         fulfillCompletion(.failure(NetworkError.decodingErorr))
                     }
                 } else {
+                    print("[objectTask(for:)]: \(String(describing: error?.localizedDescription))")
                     fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
                 }
             } else if let error = error {
+                print("[objectTask]: \(error)")
                 fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
             } else {
+                print("[objectTask(for:)]: \(String(describing: error?.localizedDescription))")
                 fulfillCompletion(.failure(NetworkError.urlSessionError))
             }
         })

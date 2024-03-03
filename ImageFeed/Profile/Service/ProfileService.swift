@@ -49,7 +49,7 @@ final class ProfileService {
                 )
                 completion(.success((self?.profile)!))
             case .failure(let error):
-                print(error)
+                print("[ProfileService]: \(error.localizedDescription) \(request)")
                 completion(.failure(error))
             }
         }

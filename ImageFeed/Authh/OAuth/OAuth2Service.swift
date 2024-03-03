@@ -62,7 +62,7 @@ final class OAuth2Service {
                     self?.authToken = authToken
                     completion(.success(authToken))
                 case .failure(let error):
-                    print(error)
+                    print("[OAuth2Service]: \(error.localizedDescription) \(request)")
                     completion(.failure(error))
                 }
             }

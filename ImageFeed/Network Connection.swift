@@ -25,11 +25,14 @@ extension URLSession {
                 if 200 ..< 300 ~= statusCode {
                     fulfillCompletion(.success(data))
                 } else {
+                    print("[data(for:)]: \(String(describing: error?.localizedDescription))")
                     fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
                 }
             } else if let error = error {
+                print("[data(for:)]: \(String(describing: error.localizedDescription))")
                 fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
             } else {
+                print("[data(for:)]: \(String(describing: error?.localizedDescription))")
                 fulfillCompletion(.failure(NetworkError.urlSessionError))
             }
         })

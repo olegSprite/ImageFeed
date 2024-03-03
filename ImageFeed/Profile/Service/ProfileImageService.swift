@@ -42,7 +42,7 @@ final class ProfileImageService {
                         object: self,
                         userInfo: ["URL": self?.avatarURL as Any])
             case .failure(let error):
-                print(error)
+                print("[ProfileImageService]: \(error.localizedDescription) \(request)")
                 completion(.failure(error))
             }
         }

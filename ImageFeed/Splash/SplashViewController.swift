@@ -18,6 +18,15 @@ final class SplashViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     
+    private var logoImageView = UIImageView()
+    
+    // MARK: - viewDidLoad
+    
+    override func viewDidLoad() {
+        addLogoImageView()
+        view.backgroundColor = .ypBlack
+    }
+    
     // MARK: - viewDidAppear
     
     override func viewDidAppear(_ animated: Bool) {
@@ -26,33 +35,40 @@ final class SplashViewController: UIViewController {
         if let token = OAuth2TokenStorage().token {
             fetchProfile(token)
         } else {
-            performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
-        }
-    }
-    
-    // MARK: - prepare
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthenticationScreenSegueIdentifier {
-            
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else { fatalError("Failed to prepare for \(showAuthenticationScreenSegueIdentifier)") }
-            
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
+            guard let authViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+            authViewController.delegate = self
+            authViewController.modalPresentationStyle = .fullScreen
+            present(authViewController, animated: true)
         }
     }
     
     // MARK: - Func
+    
+    private func addLogoImageView() {
+        logoImageView.image = UIImage(named: "splash_screen_logo")
+        
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoImageView)
+        
+        logoImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        logoImageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+    }
     
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
         window.rootViewController = tabBarController
+    }
+    
+    private func showErrorAlert() {
+        let alertController = UIAlertController(title: "Что-то пошло не так(",
+                                                message: "Не удалось войти в систему",
+                                                preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok",
+                                   style: .default)
+        alertController.addAction(action)
+        present(alertController, animated: true)
     }
 }
 
@@ -71,10 +87,11 @@ extension SplashViewController: AuthViewControllerDelegate {
         oauth2Service.fetchAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success:
-                self.switchToTabBarController()
+            case .success(let token):
+                self.fetchProfile(token)
                 UIBlockingProgressHUD.dismiss()
             case .failure:
+                self.showErrorAlert()
                 UIBlockingProgressHUD.dismiss()
                 break
             }
@@ -104,7 +121,6 @@ extension SplashViewController: AuthViewControllerDelegate {
                    self.switchToTabBarController()
 
                 case .failure:
-                    // TODO [Sprint 11] Покажите ошибку получения профиля
                     break
                 }
             }
