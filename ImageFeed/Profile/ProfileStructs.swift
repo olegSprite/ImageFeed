@@ -8,8 +8,8 @@
 import Foundation
 
 struct ProfileResult: Codable {
-    var username: String?
-    var firstName: String?
+    var username: String
+    var firstName: String
     var lastName: String?
     var bio: String?
     enum CodingKeys: String, CodingKey {

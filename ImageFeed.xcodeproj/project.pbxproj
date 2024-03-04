@@ -112,6 +112,7 @@
 			children = (
 				D572AB2C2B3FEDE900EB7B88 /* ImageFeed */,
 				D572AB332B3FEDE900EB7B88 /* Main.storyboard */,
+				D572AB362B3FEDEB00EB7B88 /* Assets.xcassets */,
 				D572AB382B3FEDEB00EB7B88 /* LaunchScreen.storyboard */,
 				D572AB2B2B3FEDE900EB7B88 /* Products */,
 			);
@@ -173,7 +174,6 @@
 		D59BE34B2B887C6700F13122 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				D572AB362B3FEDEB00EB7B88 /* Assets.xcassets */,
 				D5967B7A2B591B9200A8CCA5 /* ProfileViewController.swift */,
 				D522C4942B8CE71400D11FB7 /* ProfileStructs.swift */,
 				D5967B792B59139E00A8CCA5 /* Service */,
