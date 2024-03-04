@@ -96,4 +96,13 @@ extension ImagesListViewController: UITableViewDataSource {
         let likeImage = isLiked ? UIImage(named: "Active") : UIImage(named: "No Active")
         cell.likeButton.setImage(likeImage, for: .normal)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        //: TODO: Вызов загрузки новых фото fetchPhotosNextPage()
+        
+        
+//        if indexPath.row + 1 == photos.count {
+//            fetchPhotosNextPage()
+//        }
+    }
 }
