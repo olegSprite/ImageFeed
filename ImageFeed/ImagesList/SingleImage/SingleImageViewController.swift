@@ -10,12 +10,12 @@ import UIKit
 final class SingleImageViewController: UIViewController {
     
     var image: UIImage! {
-            didSet {
-                guard isViewLoaded else { return }
-                imageView.image = image 
-                rescaleAndCenterImageInScrollView(image: image)
-            }
+        didSet {
+            guard isViewLoaded else { return }
+            imageView.image = image 
+            rescaleAndCenterImageInScrollView(image: image)
         }
+    }
     
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var scrollView: UIScrollView!
@@ -64,7 +64,7 @@ final class SingleImageViewController: UIViewController {
         
         let shareImage = UIActivityViewController(activityItems: [image as Any], applicationActivities: nil)
         present(shareImage, animated: true)
-    
+        
     }
     
 }

@@ -7,10 +7,18 @@
 
 import Foundation
 
+enum AuthServiceError: Error {
+    case invalidRequest
+}
+
 final class OAuth2Service {
     
     static let shared = OAuth2Service()
+    private init() {}
     private let urlSession = URLSession.shared
+    
+    private var task: URLSessionTask?
+    private var lastCode: String?
     
     private (set) var authToken: String? {
         get {
@@ -25,23 +33,35 @@ final class OAuth2Service {
     func fetchAuthToken(
         _ code: String,
         completion: @escaping (Result<String, Error>) -> Void) {
+            assert(Thread.isMainThread)
             
-            let request = authTokenRequest(code: code)
-            let task = object(for: request) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
+            guard lastCode != code else { return }
+            
+            task?.cancel()
+            lastCode = code
+            
+            guard let request = authTokenRequest(code: code) else { return }
+            
+            task = URLSession.shared.objectTask(for: request) { [weak self] (response: Result<OAuthTokenResponseBody, Error>)  in
+                self?.task = nil
+                switch response {
                 case .success(let body):
                     let authToken = body.accessToken
-                    self.authToken = authToken
+                    self?.authToken = authToken
                     completion(.success(authToken))
                 case .failure(let error):
-                    print(error)
+                    print("[OAuth2Service]: \(error.localizedDescription) \(request)")
                     completion(.failure(error))
-                } }
-            task.resume()
+                }
+            }
         }
     
-    private func authTokenRequest(code: String) -> URLRequest {
+    private func authTokenRequest(code: String) -> URLRequest? {
+        
+        guard URL(string: "...\(code)") != nil else {
+            assertionFailure("Failed to create URL")
+            return nil
+        }
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "unsplash.com"
@@ -54,37 +74,11 @@ final class OAuth2Service {
             URLQueryItem(name: "grant_type", value: "authorization_code")
         ]
         
-        let url = urlComponents.url!
+        guard let url = urlComponents.url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
         print(request)
         return request
-    }
-    
-    private func object(
-        for request: URLRequest,
-        completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void
-    ) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in
-                Result { try decoder.decode(OAuthTokenResponseBody.self, from: data) }
-            }
-            completion(response)
-        }
-    }
-    
-    private struct OAuthTokenResponseBody: Decodable {
-        let accessToken: String
-        let tokenType: String
-        let scope: String
-        let createdAt: Int
-        enum CodingKeys: String, CodingKey {
-            case accessToken = "access_token"
-            case tokenType = "token_type"
-            case scope
-            case createdAt = "created_at"
-        }
     }
 }
