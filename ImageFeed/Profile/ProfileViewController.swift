@@ -14,13 +14,16 @@ final class ProfileViewController: UIViewController {
     private var nameLable = UILabel()
     private let nickNameLable = UILabel()
     private let statusLable = UILabel()
-    private let exitButton = UIButton.systemButton(
-        with: UIImage(imageLiteralResourceName: "Exit"),
-        target: ProfileViewController.self,
-        action: #selector(Self.didTapButton)
-    )
+    
+    //    private let exitButton = UIButton.systemButton(
+    //        with: UIImage(imageLiteralResourceName: "Exit"),
+    //        target: ProfileViewController.self,
+    //        action: #selector(didTapButton)
+    //    )
+    private let exitButton = UIButton.systemButton(with: UIImage(imageLiteralResourceName: "Exit"), target: nil, action: nil)
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
+    private var storage = OAuth2TokenStorage()
     
     override init(nibName: String?, bundle: Bundle?) {
         super.init(nibName: nibName, bundle: bundle)
@@ -169,6 +172,8 @@ final class ProfileViewController: UIViewController {
     
     private func addExitButton() {
         
+        exitButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        
         exitButton.tintColor = UIColor(named: "YP Red")
         
         exitButton.translatesAutoresizingMaskIntoConstraints = false
@@ -188,6 +193,6 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func didTapButton() {
-        
+        // TODO: - Тут нужно добавить выход из профиля
     }
 }

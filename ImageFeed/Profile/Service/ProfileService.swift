@@ -21,7 +21,7 @@ final class ProfileService {
         urlComponents.host = "api.unsplash.com"
         urlComponents.path = "/me"
         
-        let url = urlComponents.url!
+        guard let url = urlComponents.url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
@@ -40,14 +40,16 @@ final class ProfileService {
         
         task = URLSession.shared.objectTask(for: request) { [weak self] (response: Result<ProfileResult, Error>)  in
             self?.task = nil
+            guard let self = self else { return }
             switch response {
             case .success(let body):
-                self?.profile = Profile(
+                let profile = Profile(
                     userName: body.username ?? "Пусто",
                     name: "\(body.firstName ?? "Пусто") \(body.lastName ?? "Пусто")",
                     bio: body.bio ?? "Пусто"
                 )
-                completion(.success((self?.profile)!))
+                self.profile = profile
+                completion(.success((profile)))
             case .failure(let error):
                 print("[ProfileService]: \(error.localizedDescription) \(request)")
                 completion(.failure(error))

@@ -25,8 +25,8 @@ final class ProfileImageService {
         assert(Thread.isMainThread)
         
         if task != nil {
-                task?.cancel()
-            }
+            task?.cancel()
+        }
         
         task = URLSession.shared.objectTask(for: request) { [weak self] (response: Result<UserResult, Error>)  in
             
@@ -55,7 +55,7 @@ final class ProfileImageService {
         urlComponents.host = "api.unsplash.com"
         urlComponents.path = "/users/\(username)"
         
-        let url = urlComponents.url!
+        guard let url = urlComponents.url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         

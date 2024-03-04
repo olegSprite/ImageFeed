@@ -36,7 +36,7 @@ final class OAuth2Service {
             assert(Thread.isMainThread)
             
             guard lastCode != code else { return }
-
+            
             task?.cancel()
             lastCode = code
             
@@ -74,7 +74,7 @@ final class OAuth2Service {
             URLQueryItem(name: "grant_type", value: "authorization_code")
         ]
         
-        let url = urlComponents.url!
+        guard let url = urlComponents.url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         

@@ -99,30 +99,30 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
     
     func didAuthenticate(_ vc: AuthViewController) {
-            vc.dismiss(animated: true)
-           
-            guard let token = oauth2TokenStorage.token else {
-                return
-            }
+        vc.dismiss(animated: true)
+        
+        guard let token = oauth2TokenStorage.token else {
+            return
+        }
+        
+        fetchProfile(token)
+    }
+    
+    private func fetchProfile(_ token: String) {
+        UIBlockingProgressHUD.show()
+        profileService.fetchProfile(token) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
             
-            fetchProfile(token)
-        }
-
-        private func fetchProfile(_ token: String) {
-            UIBlockingProgressHUD.show()
-            profileService.fetchProfile(token) { [weak self] result in
-                UIBlockingProgressHUD.dismiss()
-
-                guard let self = self else { return }
-
-                switch result {
-                case .success(let user):
-                   self.profileImageService.fetchProfileImageURL(username: user.userName, token: token) { _ in }
-                   self.switchToTabBarController()
-
-                case .failure:
-                    break
-                }
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let user):
+                self.profileImageService.fetchProfileImageURL(username: user.userName, token: token) { _ in }
+                self.switchToTabBarController()
+                
+            case .failure:
+                break
             }
         }
+    }
 }
