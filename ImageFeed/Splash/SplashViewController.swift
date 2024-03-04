@@ -13,7 +13,7 @@ final class SplashViewController: UIViewController {
     
     let showAuthenticationScreenSegueIdentifier = "AuthenticationScreenSegueIdentifier"
     
-    private let oauth2Service = OAuth2Service()
+    private let oauth2Service = OAuth2Service.shared
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared

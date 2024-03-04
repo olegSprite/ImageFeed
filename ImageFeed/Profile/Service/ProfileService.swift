@@ -44,7 +44,7 @@ final class ProfileService {
             case .success(let body):
                 self?.profile = Profile(
                     userName: body.username ?? "Пусто",
-                    name: "\(body.first_name ?? "Пусто") \(body.last_name ?? "Пусто")",
+                    name: "\(body.firstName ?? "Пусто") \(body.lastName ?? "Пусто")",
                     bio: body.bio ?? "Пусто"
                 )
                 completion(.success((self?.profile)!))

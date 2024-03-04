@@ -14,6 +14,7 @@ enum AuthServiceError: Error {
 final class OAuth2Service {
     
     static let shared = OAuth2Service()
+    private init() {}
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
@@ -34,25 +35,12 @@ final class OAuth2Service {
         completion: @escaping (Result<String, Error>) -> Void) {
             assert(Thread.isMainThread)
             
-            if task != nil {
-                if lastCode != code {
-                    task?.cancel()
-                } else {
-                    completion(.failure(AuthServiceError.invalidRequest))
-                    return
-                }
-            } else {
-                if lastCode == code {
-                    completion(.failure(AuthServiceError.invalidRequest))
-                    return
-                }
-            }
+            guard lastCode != code else { return }
+
+            task?.cancel()
             lastCode = code
             
-            guard let request = authTokenRequest(code: code) else {
-                completion(.failure(AuthServiceError.invalidRequest))
-                return
-            }
+            guard let request = authTokenRequest(code: code) else { return }
             
             task = URLSession.shared.objectTask(for: request) { [weak self] (response: Result<OAuthTokenResponseBody, Error>)  in
                 self?.task = nil
@@ -92,18 +80,5 @@ final class OAuth2Service {
         
         print(request)
         return request
-    }
-    
-    private struct OAuthTokenResponseBody: Decodable {
-        let accessToken: String
-        let tokenType: String
-        let scope: String
-        let createdAt: Int
-        enum CodingKeys: String, CodingKey {
-            case accessToken = "access_token"
-            case tokenType = "token_type"
-            case scope
-            case createdAt = "created_at"
-        }
     }
 }
