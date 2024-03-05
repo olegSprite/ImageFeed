@@ -13,12 +13,14 @@ final class ImagesListService {
     private var task: URLSessionTask?
     private (set) var photos: [Photo] = []
     private let urlSession = URLSession.shared
+    private let oauth2TokenStorage = OAuth2TokenStorage()
+
     
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
-    func fetchPhotosNextPage(_ token: String, completion: @escaping (Result<String?, Error>) -> Void) {
+    func fetchPhotosNextPage() {
         let nextPage = (lastLoadedPage ?? 0) + 1
-        guard let request = createURLRequest(with: token, page: nextPage) else { return }
+        guard let request = createURLRequest(page: nextPage) else { return }
         assert(Thread.isMainThread)
         if task != nil { return }
         
@@ -32,17 +34,18 @@ final class ImagesListService {
                         photos.append(self.convertToPhoto(photo))
                     }
                     self.photos += photos
+                    NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: self)
                 }
-                NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: self)
+                self.task = nil
+                self.lastLoadedPage = nextPage
             case .failure(let error):
                 self.task = nil
                 print("[ImagesListService]: \(error.localizedDescription) \(request)")
-                completion(.failure(error))
             }
         }
     }
     
-    private func createURLRequest(with token: String, page: Int) -> URLRequest? {
+    private func createURLRequest(page: Int) -> URLRequest? {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -50,15 +53,15 @@ final class ImagesListService {
         urlComponents.path = "/photos"
         urlComponents.queryItems = [
             URLQueryItem(name: "page", value: String(page)),
-            URLQueryItem(name: "per_page", value: "10"),
-            URLQueryItem(name: "order_by", value: "popular"),
         ]
         
         guard let url = urlComponents.url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        if let token = oauth2TokenStorage.token {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        print(url)
         return request
     }
     
