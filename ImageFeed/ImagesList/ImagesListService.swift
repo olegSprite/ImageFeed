@@ -14,6 +14,7 @@ final class ImagesListService {
     private (set) var photos: [Photo] = []
     private let urlSession = URLSession.shared
     private let oauth2TokenStorage = OAuth2TokenStorage()
+    static let shared = ImagesListService()
 
     
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
@@ -72,7 +73,7 @@ final class ImagesListService {
             size: CGSize(width: photoResult.width, height: photoResult.height),
             createdAt: dateFormatter.date(from: photoResult.created ?? ""), // - Проверить что дата норм форматируется
             welcomeDescription: photoResult.description,
-            thumbImageURL: photoResult.urls.thumb,
+            thumbImageURL: photoResult.urls.small,
             largeImageURL: photoResult.urls.full,
             isLiked: photoResult.likedByUser)
         return result

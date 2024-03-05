@@ -20,6 +20,9 @@ final class ImagesListViewController: UIViewController {
         return formatter
     }()
     
+    private var imageListService = ImagesListService.shared
+    private var imageListServiceObserver: NSObjectProtocol?
+    
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
     // MARK: - Lifecycle
@@ -30,6 +33,9 @@ final class ImagesListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        
+        imageListService.fetchPhotosNextPage()
+        addObserver()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -40,6 +46,17 @@ final class ImagesListViewController: UIViewController {
             viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)
+        }
+    }
+    
+    func addObserver() {
+      imageListServiceObserver = NotificationCenter.default
+        .addObserver(
+            forName: ImagesListService.didChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.tableView.reloadData()
         }
     }
 }
@@ -70,7 +87,7 @@ extension ImagesListViewController: UITableViewDelegate {
 extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosName.count
+        return imageListService.photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -89,7 +106,7 @@ extension ImagesListViewController: UITableViewDataSource {
             return
         }
         
-        cell.cellImageView.image = image
+        cell.setImage(url: imageListService.photos[indexPath.row].thumbImageURL)
         cell.dateLabel.text = dateFormatter.string(from: Date())
         
         let isLiked = indexPath.row % 2 == 0
@@ -100,9 +117,8 @@ extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         //: TODO: Вызов загрузки новых фото fetchPhotosNextPage()
         
-        
-//        if indexPath.row + 1 == photos.count {
-//            fetchPhotosNextPage()
-//        }
+        if indexPath.row + 1 == imageListService.photos.count {
+            imageListService.fetchPhotosNextPage()
+        }
     }
 }
