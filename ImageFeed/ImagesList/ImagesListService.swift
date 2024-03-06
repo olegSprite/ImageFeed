@@ -68,6 +68,7 @@ final class ImagesListService {
     
     private func convertToPhoto(_ photoResult: PhotoResult) -> Photo {
         let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let result = Photo(
             id: photoResult.id,
             size: CGSize(width: photoResult.width, height: photoResult.height),

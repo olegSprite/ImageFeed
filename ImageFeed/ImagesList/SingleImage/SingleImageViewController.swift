@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Kingfisher
+import ProgressHUD
 
 final class SingleImageViewController: UIViewController {
     
@@ -17,6 +19,8 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
+    var imgaeUrl: URL?
+    
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var scrollView: UIScrollView!
     
@@ -24,15 +28,10 @@ final class SingleImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = image
-        
-        
+        fechSingleImage()
         scrollView.delegate = self
-        
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
-        
-        rescaleAndCenterImageInScrollView(image: image)
     }
     
     // MARK: - Funcs
@@ -52,6 +51,21 @@ final class SingleImageViewController: UIViewController {
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+    }
+    
+    private func fechSingleImage() {
+        ProgressHUD.animate()
+        imageView.kf.setImage(with: imgaeUrl) { [weak self] result in
+            ProgressHUD.dismiss()
+            guard let self = self else { return }
+            switch result {
+            case .success(let image):
+                self.image = image.image
+                self.rescaleAndCenterImageInScrollView(image: self.image)
+            case .failure(let error):
+                print("[fechSingleImage]: \(error.localizedDescription)")
+            }
+        }
     }
     
     //MARK: - Actions

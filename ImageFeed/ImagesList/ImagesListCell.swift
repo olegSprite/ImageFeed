@@ -24,6 +24,6 @@ final class ImagesListCell: UITableViewCell {
         guard let url = URL(string: url) else { return }
         
         cellImageView.kf.indicatorType = .activity
-        self.cellImageView.kf.setImage(with: url, placeholder: UIImage(named: "photo.fill"))
+        self.cellImageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
     }
 }
