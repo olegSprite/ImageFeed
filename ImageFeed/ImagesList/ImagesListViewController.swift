@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class ImagesListViewController: UIViewController {
     
@@ -133,17 +134,23 @@ extension ImagesListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - ImagesListCellDelegate
+
 extension ImagesListViewController: ImagesListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         let photo = photos[indexPath.row]
+        UIBlockingProgressHUD.show()
         imageListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { [weak self] result in
-            guard self != nil else { return }
+            guard let self = self else { return }
             switch result {
             case .success(let body):
+                self.photos = self.imageListService.photos
                 cell.setIsLiked(body.photo.likedByUser)
+                UIBlockingProgressHUD.dismiss()
             case .failure(let error):
-                print(error)
+                UIBlockingProgressHUD.dismiss()
+                // TODO: Показать ошибку с использованием UIAlertController
             }
         }
     }

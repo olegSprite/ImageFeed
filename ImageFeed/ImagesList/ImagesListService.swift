@@ -80,6 +80,10 @@ final class ImagesListService {
         return result
     }
     
+    func deletePhotos() {
+        photos.removeAll()
+    }
+    
     // MARK: - Likes
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<ResultPhotoWhenLike, Error>) -> Void) {
