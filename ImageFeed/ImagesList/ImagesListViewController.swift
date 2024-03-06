@@ -106,11 +106,9 @@ extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
-        
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-        
         configCell(for: imageListCell, with: indexPath)
         return imageListCell
     }
@@ -120,9 +118,10 @@ extension ImagesListViewController: UITableViewDataSource {
         if let date = imageListService.photos[indexPath.row].createdAt {
             cell.dateLabel.text = dateFormatter.string(from: date)
         }
-        let isLiked = indexPath.row % 2 == 0
+        let isLiked = imageListService.photos[indexPath.row].isLiked
         let likeImage = isLiked ? UIImage(named: "Active") : UIImage(named: "No Active")
         cell.likeButton.setImage(likeImage, for: .normal)
+        cell.delegate = self
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -130,6 +129,22 @@ extension ImagesListViewController: UITableViewDataSource {
         
         if indexPath.row + 1 == imageListService.photos.count {
             imageListService.fetchPhotosNextPage()
+        }
+    }
+}
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+        imageListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { [weak self] result in
+            guard self != nil else { return }
+            switch result {
+            case .success(let body):
+                cell.setIsLiked(body.photo.likedByUser)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 }
