@@ -14,9 +14,9 @@ protocol ImagesListCellDelegate: AnyObject {
 
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
-    @IBOutlet var likeButton: UIButton!
-    @IBOutlet var cellImageView: UIImageView!
-    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet private var likeButton: UIButton!
+    @IBOutlet private var cellImageView: UIImageView!
+    @IBOutlet private var dateLabel: UILabel!
     weak var delegate: ImagesListCellDelegate?
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -30,14 +30,16 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setIsLiked(_ curentLike: Bool) {
-        if curentLike {
-            likeButton.setImage(UIImage(named: "Active"), for: .normal)
-        } else {
-            likeButton.setImage(UIImage(named: "No Active"), for: .normal)
-        }
+        likeButton.setImage(UIImage(named: curentLike ? "Active" : "No Active"), for: .normal)
     }
     
-    @IBAction func likeButtonTap(_ sender: Any) {
+    func configure(dateText: String, isLiked: Bool) {
+        self.dateLabel.text = dateText
+        let likeImage = isLiked ? UIImage(named: "Active") : UIImage(named: "No Active")
+        self.likeButton.setImage(likeImage, for: .normal)
+    }
+    
+    @IBAction private func likeButtonTap(_ sender: Any) {
         delegate?.imageListCellDidTapLike(self)
     }
 }

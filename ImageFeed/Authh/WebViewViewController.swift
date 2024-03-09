@@ -21,7 +21,7 @@ final class WebViewViewController: UIViewController {
     
     weak var delegate: WebViewViewControllerDelegate?
     
-    fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
+    fileprivate let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     
     // MARK: - viewDidLoad
     
@@ -69,7 +69,7 @@ final class WebViewViewController: UIViewController {
     }
     
     private func loadWebWiew() {
-        guard var urlComponents = URLComponents(string: UnsplashAuthorizeURLString) else { return }
+        guard var urlComponents = URLComponents(string: unsplashAuthorizeURLString) else { return }
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: accessKey),
             URLQueryItem(name: "redirect_uri", value: redirectURI),
@@ -89,7 +89,7 @@ final class WebViewViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func didTapBackButton(_ sender: Any) {
+    @IBAction private func didTapBackButton(_ sender: Any) {
         delegate?.webViewViewControllerDidCancel(self)
     }
 }

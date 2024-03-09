@@ -19,10 +19,7 @@ class OAuth2TokenStorage {
         }
         set {
             guard let newValue = newValue else { return }
-            let isSuccess = keychainWrapper.set(newValue, forKey: tokenSave)
-            guard isSuccess else {
-                fatalError("Ошибка сохранения токена")
-            }
+            keychainWrapper.set(newValue, forKey: tokenSave)
         }
     }
     

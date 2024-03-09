@@ -70,12 +70,19 @@ final class SingleImageViewController: UIViewController {
     }
     
     private func showError() {
-        let alertController = UIAlertController(title: "Что-то пошло не так.",
-                                                message: "Попробовать ещё раз?",
-                                                preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Не надо",
-                                   style: .default)
-        let action = UIAlertAction(title: "Повторить", style: .default) { _ in
+        let alertController = UIAlertController(
+            title: "Что-то пошло не так.",
+            message: "Попробовать ещё раз?",
+            preferredStyle: .alert
+        )
+        let cancel = UIAlertAction(
+            title: "Не надо",
+            style: .default
+        )
+        let action = UIAlertAction(
+            title: "Повторить",
+            style: .default
+        ) { _ in
             self.fechSingleImage()
         }
         alertController.addAction(action)

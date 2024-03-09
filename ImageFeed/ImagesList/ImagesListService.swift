@@ -28,9 +28,11 @@ final class ImagesListService {
     
     func fetchPhotosNextPage() {
         let nextPage = (lastLoadedPage ?? 0) + 1
-        guard let request = createURLRequest(page: nextPage) else { return }
+        guard
+            let request = createURLRequest(page: nextPage),
+            task == nil
+        else { return }
         assert(Thread.isMainThread)
-        if task != nil { return }
         task = URLSession.shared.objectTask(for: request) { [weak self] (response: Result<[PhotoResult], Error>)  in
             guard let self = self else { return }
             switch response {

@@ -109,11 +109,9 @@ extension ImagesListViewController: UITableViewDataSource {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         cell.setImage(url: imageListService.photos[indexPath.row].thumbImageURL)
         if let date = imageListService.photos[indexPath.row].createdAt {
-            cell.dateLabel.text = dateFormatter.string(from: date)
+            let isLiked = imageListService.photos[indexPath.row].isLiked
+            cell.configure(dateText: dateFormatter.string(from: date), isLiked: isLiked)
         }
-        let isLiked = imageListService.photos[indexPath.row].isLiked
-        let likeImage = isLiked ? UIImage(named: "Active") : UIImage(named: "No Active")
-        cell.likeButton.setImage(likeImage, for: .normal)
         cell.delegate = self
     }
     
