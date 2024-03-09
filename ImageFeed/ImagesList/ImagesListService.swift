@@ -16,11 +16,8 @@ final class ImagesListService {
     private let oauth2TokenStorage = OAuth2TokenStorage()
     static let shared = ImagesListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+    private lazy var iso8601Formatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
         return formatter
     }()
     
@@ -73,11 +70,10 @@ final class ImagesListService {
     }
     
     private func convertToPhoto(_ photoResult: PhotoResult) -> Photo {
-        self.dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let result = Photo(
             id: photoResult.id,
             size: CGSize(width: photoResult.width, height: photoResult.height),
-            createdAt: self.dateFormatter.date(from: photoResult.created ?? ""),
+            createdAt: self.iso8601Formatter.date(from: photoResult.created ?? ""),
             welcomeDescription: photoResult.description,
             thumbImageURL: photoResult.urls.small,
             largeImageURL: photoResult.urls.full,
