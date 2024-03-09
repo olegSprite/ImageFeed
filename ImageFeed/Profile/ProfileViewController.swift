@@ -39,22 +39,18 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .ypBlack
         addProfilePhotoImageView()
         addNameLable()
         addNickName()
         addStatus()
         addExitButton()
-        
         guard let profile = profileService.profile else { return }
         updateProfileDetails(profile: profile)
-        
         if let avatarURL = ProfileImageService.shared.avatarURL,
            let url = URL(string: avatarURL) {
             updateAvatar(url: url)
         }
-        
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
             object: nil,

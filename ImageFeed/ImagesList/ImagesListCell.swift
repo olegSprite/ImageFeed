@@ -18,15 +18,13 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet var cellImageView: UIImageView!
     @IBOutlet var dateLabel: UILabel!
     weak var delegate: ImagesListCellDelegate?
-    
     override func prepareForReuse() {
-            super.prepareForReuse()
-            cellImageView.kf.cancelDownloadTask()
-        }
+        super.prepareForReuse()
+        cellImageView.kf.cancelDownloadTask()
+    }
     
     func setImage(url: String) {
         guard let url = URL(string: url) else { return }
-        
         cellImageView.kf.indicatorType = .activity
         self.cellImageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
     }

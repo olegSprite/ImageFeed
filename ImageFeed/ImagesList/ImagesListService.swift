@@ -16,6 +16,13 @@ final class ImagesListService {
     private let oauth2TokenStorage = OAuth2TokenStorage()
     static let shared = ImagesListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return formatter
+    }()
     
     // MARK: - Photo
     
@@ -24,7 +31,6 @@ final class ImagesListService {
         guard let request = createURLRequest(page: nextPage) else { return }
         assert(Thread.isMainThread)
         if task != nil { return }
-        
         task = URLSession.shared.objectTask(for: request) { [weak self] (response: Result<[PhotoResult], Error>)  in
             guard let self = self else { return }
             switch response {
@@ -55,24 +61,21 @@ final class ImagesListService {
         urlComponents.queryItems = [
             URLQueryItem(name: "page", value: String(page)),
         ]
-        
         guard let url = urlComponents.url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         if let token = oauth2TokenStorage.token {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        print(url)
         return request
     }
     
     private func convertToPhoto(_ photoResult: PhotoResult) -> Photo {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        self.dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let result = Photo(
             id: photoResult.id,
             size: CGSize(width: photoResult.width, height: photoResult.height),
-            createdAt: dateFormatter.date(from: photoResult.created ?? ""), // - Проверить что дата норм форматируется
+            createdAt: self.dateFormatter.date(from: photoResult.created ?? ""),
             welcomeDescription: photoResult.description,
             thumbImageURL: photoResult.urls.small,
             largeImageURL: photoResult.urls.full,
@@ -88,7 +91,6 @@ final class ImagesListService {
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<ResultPhotoWhenLike, Error>) -> Void) {
         guard let request = createLikeURLRequest(id: photoId, isLike: isLike) else { return }
-        
         task = URLSession.shared.objectTask(for: request) { [weak self] (response: Result<ResultPhotoWhenLike, Error>)  in
             guard let self = self else { return }
             switch response {
@@ -121,7 +123,6 @@ final class ImagesListService {
         urlComponents.scheme = "https"
         urlComponents.host = "api.unsplash.com"
         urlComponents.path = "/photos/\(id)/like"
-        
         guard let url = urlComponents.url else { return nil }
         var request = URLRequest(url: url)
         if isLike {
@@ -130,8 +131,7 @@ final class ImagesListService {
         if let token = oauth2TokenStorage.token {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        print(url)
         return request
     }
-
+    
 }

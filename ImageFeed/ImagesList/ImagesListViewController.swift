@@ -11,32 +11,24 @@ import ProgressHUD
 final class ImagesListViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
-    
-    private let photosName: [String] = Array(0..<20).map{ "\($0)" }
-    
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         return formatter
     }()
-    
     private var photos: [Photo] = []
-    
     private var imageListService = ImagesListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
-    
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        
         imageListService.fetchPhotosNextPage()
         addObserver()
     }
@@ -53,14 +45,14 @@ final class ImagesListViewController: UIViewController {
     }
     
     func addObserver() {
-      imageListServiceObserver = NotificationCenter.default
-        .addObserver(
-            forName: ImagesListService.didChangeNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            self?.updateTableViewAnimated()
-        }
+        imageListServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ImagesListService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.updateTableViewAnimated()
+            }
     }
     
     func updateTableViewAnimated() {
@@ -126,8 +118,6 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        //: TODO: Вызов загрузки новых фото fetchPhotosNextPage()
-        
         if indexPath.row + 1 == imageListService.photos.count {
             imageListService.fetchPhotosNextPage()
         }
@@ -148,9 +138,8 @@ extension ImagesListViewController: ImagesListCellDelegate {
                 self.photos = self.imageListService.photos
                 cell.setIsLiked(body.photo.likedByUser)
                 UIBlockingProgressHUD.dismiss()
-            case .failure(let error):
+            case .failure(_):
                 UIBlockingProgressHUD.dismiss()
-                // TODO: Показать ошибку с использованием UIAlertController
             }
         }
     }
