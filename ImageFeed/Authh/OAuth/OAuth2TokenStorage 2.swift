@@ -10,6 +10,7 @@ import SwiftKeychainWrapper
 
 class OAuth2TokenStorage {
     
+    let userDefaults = UserDefaults.standard
     let keychainWrapper = KeychainWrapper.standard
     let tokenSave = "token"
     
@@ -19,11 +20,10 @@ class OAuth2TokenStorage {
         }
         set {
             guard let newValue = newValue else { return }
-            keychainWrapper.set(newValue, forKey: tokenSave)
+            let isSuccess = keychainWrapper.set(newValue, forKey: tokenSave)
+            guard isSuccess else {
+                fatalError("Ошибка сохранения токена")
+            }
         }
-    }
-    
-    func removeToken() {
-        keychainWrapper.removeObject(forKey: tokenSave)
     }
 }

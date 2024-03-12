@@ -77,6 +77,8 @@ final class OAuth2Service {
         guard let url = urlComponents.url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        
+        print(request)
         return request
     }
 }

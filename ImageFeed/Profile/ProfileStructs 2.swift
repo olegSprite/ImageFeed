@@ -27,11 +27,7 @@ struct Profile {
 }
 
 struct UserResult: Codable {
-    var profileImage: ImageURL?
-    
-    enum CodingKeys: String, CodingKey {
-        case profileImage = "profile_image"
-    }
+    var profile_image: ImageURL?
 }
 
 struct ImageURL: Codable {

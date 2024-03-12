@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import WebKit
 
 final class ProfileViewController: UIViewController {
     
@@ -14,12 +15,6 @@ final class ProfileViewController: UIViewController {
     private var nameLable = UILabel()
     private let nickNameLable = UILabel()
     private let statusLable = UILabel()
-    
-    //    private let exitButton = UIButton.systemButton(
-    //        with: UIImage(imageLiteralResourceName: "Exit"),
-    //        target: ProfileViewController.self,
-    //        action: #selector(didTapButton)
-    //    )
     private let exitButton = UIButton.systemButton(with: UIImage(imageLiteralResourceName: "Exit"), target: nil, action: nil)
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -44,22 +39,18 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .ypBlack
         addProfilePhotoImageView()
         addNameLable()
         addNickName()
         addStatus()
         addExitButton()
-        
         guard let profile = profileService.profile else { return }
         updateProfileDetails(profile: profile)
-        
         if let avatarURL = ProfileImageService.shared.avatarURL,
            let url = URL(string: avatarURL) {
             updateAvatar(url: url)
         }
-        
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
             object: nil,
@@ -193,6 +184,52 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func didTapButton() {
-        // TODO: - Тут нужно добавить выход из профиля
+        self.exitAlert()
+    }
+    
+    private func exitAlert() {
+        let alertController = UIAlertController(title: "Пока, пока!",
+                                                message: "Уверены, что хотите выйти?",
+                                                preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Нет",
+                                   style: .cancel)
+        let action = UIAlertAction(title: "Да", style: .default) { _ in
+            self.cleanToken()
+            self.cleanCookies()
+            self.cleanUserData()
+            self.goToSplashViewController()
+        }
+        alertController.addAction(action)
+        alertController.addAction(cancel)
+        present(alertController, animated: true)
+    }
+}
+
+extension ProfileViewController {
+    
+    private func cleanToken() {
+        storage.removeToken()
+    }
+    
+    private func cleanCookies() {
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
+        }
+    }
+    
+    private func cleanUserData() {
+        self.nameLable.text = "Name"
+        self.nickNameLable.text = "@name"
+        self.statusLable.text = "bio"
+        self.profilePhotoImageView.image = UIImage(named: "PhotoProfile")
+        ImagesListService.shared.deletePhotos()
+    }
+    
+    private func goToSplashViewController() {
+        guard let window = UIApplication.shared.windows.first else { preconditionFailure("Invalid Configuration") }
+        window.rootViewController = SplashViewController()
     }
 }
