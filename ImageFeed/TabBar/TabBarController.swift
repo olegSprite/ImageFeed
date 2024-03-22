@@ -16,6 +16,10 @@ final class TabBarController: UITabBarController {
         let imagesListViewController = storyboard.instantiateViewController(
             withIdentifier: "ImagesListViewController"
         )
+        let imagesListViewPresenter = ImageListViewPresenter()
+        guard let imagesListViewController = imagesListViewController as? ImagesListViewController else { return }
+        imagesListViewPresenter.view = imagesListViewController
+        imagesListViewController.presenter = imagesListViewPresenter
         
         let profileViewController = ProfileViewController()
         let profileViewPresentor = ProfileViewPresenter()
