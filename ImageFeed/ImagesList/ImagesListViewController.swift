@@ -22,8 +22,7 @@ final class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
-    //    private var photos: [Photo] = []
-        private var imageListService = ImagesListService.shared
+    private var imageListService = ImagesListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     var presenter: ImageListViewPresenterProtocol?
@@ -35,7 +34,7 @@ final class ImagesListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        imageListService.fetchPhotosNextPage()
+        presenter?.fetchPhotos()
         addObserver()
     }
     
@@ -109,7 +108,7 @@ extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == imageListService.photos.count {
-            imageListService.fetchPhotosNextPage()
+            presenter?.fetchPhotos()
         }
     }
 }

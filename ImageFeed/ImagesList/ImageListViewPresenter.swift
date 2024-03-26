@@ -11,6 +11,7 @@ protocol ImageListViewPresenterProtocol: AnyObject {
     var view: ImageListViewControllerProtocol? { get set }
     var photos: [Photo] { get set }
     func updateTable()
+    func fetchPhotos()
 }
 
 final class ImageListViewPresenter: ImageListViewPresenterProtocol {
@@ -32,5 +33,9 @@ final class ImageListViewPresenter: ImageListViewPresenterProtocol {
         if oldCount != newCount {
             view?.updateTableViewAnimated(oldCount: oldCount, newCount: newCount)
         }
+    }
+    
+    func fetchPhotos() {
+        imageListService.fetchPhotosNextPage()
     }
 }

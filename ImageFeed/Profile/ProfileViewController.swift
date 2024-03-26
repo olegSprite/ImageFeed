@@ -109,14 +109,11 @@ final class ProfileViewController: UIViewController {
     
     
     private func addProfilePhotoImageView() {
-        
-        profilePhotoImageView.image = UIImage(named: "PhotoProfile")
+        profilePhotoImageView.image = UIImage(systemName: "person.circle")
         profilePhotoImageView.layer.cornerRadius = 35
         profilePhotoImageView.clipsToBounds = true
-        
         profilePhotoImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(profilePhotoImageView)
-        
         profilePhotoImageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         profilePhotoImageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         profilePhotoImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
@@ -124,26 +121,21 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addNameLable() {
-        
-        nameLable.text = "Екатерина Новикова"
+        nameLable.text = "Name Lastname"
         nameLable.textColor = .white
         nameLable.font = UIFont.boldSystemFont(ofSize: 23)
-        
         nameLable.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLable)
-        
         nameLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         nameLable.topAnchor.constraint(equalTo: profilePhotoImageView.bottomAnchor, constant: 8).isActive = true
     }
     
     private func addNickName() {
-        nickNameLable.text = "@ekaterina_nov"
+        nickNameLable.text = "@username"
         nickNameLable.textColor = .gray
         nickNameLable.font = nickNameLable.font.withSize(13)
-        
         nickNameLable.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nickNameLable)
-        
         nickNameLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         nickNameLable.topAnchor.constraint(equalTo: nameLable.bottomAnchor, constant: 8).isActive = true
     }
@@ -152,23 +144,18 @@ final class ProfileViewController: UIViewController {
         statusLable.text = "Hello, world!"
         statusLable.textColor = .white
         statusLable.font = statusLable.font.withSize(13)
-        
         statusLable.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(statusLable)
-        
         statusLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         statusLable.topAnchor.constraint(equalTo: nickNameLable.bottomAnchor, constant: 8).isActive = true
     }
     
     private func addExitButton() {
-        
         exitButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        
+        exitButton.accessibilityIdentifier = "logoutButton"
         exitButton.tintColor = UIColor(named: "YP Red")
-        
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitButton)
-        
         exitButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         exitButton.widthAnchor.constraint(equalToConstant: 48).isActive = true
         exitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
