@@ -8,7 +8,7 @@
 @testable import ImageFeed
 import XCTest
 
-class Image_FeedUITests: XCTestCase {
+final class Image_FeedUITests: XCTestCase {
     
     private let app = XCUIApplication()
     
@@ -43,11 +43,11 @@ class Image_FeedUITests: XCTestCase {
         cell.swipeUp()
         sleep(2)
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
-        cellToLike.buttons["No Active"].tap()
-        cellToLike.buttons["Active"].tap()
+        cellToLike.buttons["likeID"].tap()
+        cellToLike.buttons["likeID"].tap()
         sleep(2)
         cellToLike.tap()
-        sleep(5)
+        sleep(2)
         let image = app.scrollViews.images.element(boundBy: 0)
         image.pinch(withScale: 3, velocity: 1)
         image.pinch(withScale: 0.5, velocity: -1)
@@ -58,9 +58,9 @@ class Image_FeedUITests: XCTestCase {
     func testProfile() throws {
         sleep(3)
         app.tabBars.buttons.element(boundBy: 1).tap()
-        XCTAssertTrue(app.staticTexts["Name Lastname"].exists)
-        XCTAssertTrue(app.staticTexts["@username"].exists)
-        app.buttons["logout button"].tap()
+        XCTAssertTrue(app.staticTexts["full name"].exists)
+        XCTAssertTrue(app.staticTexts["username"].exists)
+        app.buttons["logoutButton"].tap()
         app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
     }
 }
